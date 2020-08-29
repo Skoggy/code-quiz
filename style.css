@@ -22,6 +22,13 @@ body {
     background-color: hsl(var(--hue), 100%, 20%);
 }
 
+#timer {
+    font-size: 50px;
+    color:black;
+
+    
+}
+
 
 body.correct  {
     --hue: var(--hue-correct);
@@ -88,6 +95,6 @@ h1 {
     display: none;
 }
 
-.question {
+#question {
     font-size: 30px;
 }
