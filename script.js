@@ -8,8 +8,11 @@ const highScoresContainerElement = document.getElementById('highscores-container
 const gameOverContainerElement = document.getElementById('game-over-container');
 const questionEle = document.getElementById('question');
 const answerBtns = document.getElementById('answer-buttons');
+const submitBtn = document.getElementById('submit')
 const timerEl = document.getElementById('timer');
 const userScoreEl = document.getElementById('user-score')
+//highScore = JSON.parse(localStorage.getItem("highScore") || "[]"),
+scoreList = document.getElementById('score-list')
 var userNameInput; 
 
 var secondsLeft = 90;
@@ -31,8 +34,6 @@ function setTimer()  {
         timerEl.textContent = "Time: " + secondsLeft;
         if (secondsLeft === 0 || questionIndex === questions.length) {
             clearInterval(countdown);
-            setTimeout(displayScore, 500);
-
         }
     }, 1000
       )  }
@@ -41,45 +42,49 @@ function displayScore()  {
         questionContainerElement.classList.add('hide');
         gameOverContainerElement.classList.remove('hide');
         userScoreEl.textContent = "Your score is " + secondsLeft
-+ "."   
++ ".";   
  }
- function scoreAdd ()  {
-     userNameInput = document.getElementById('user-name').value 
- 
+ submitBtn.addEventListener('click', function(event) {
+     event.stopPropagation();
+     scoreAdd();
+ });
 
- var newUser = {
+ function scoreAdd (userNameInput, secondsLeft)  {
+     userNameInput = document.getElementById('user-name').value 
+ let newUser = {
      name: userNameInput,
      score: secondsLeft
- };
+ }
 //Highscore variable declaration
  var highScore = JSON.parse(localStorage.getItem('highScore') || "[]");
 
- highScore.push(NewUser)
+ highScore.push(newUser);
  localStorage.setItem('highScore', JSON.stringify('highScore'));
+ console.log(highScore.length);
 
- }
+ for (var i = 0; i < highScore.length; i++)  {
+    var addScore = document.createElement('li')
+    addScore.textContent = highScore[i].name + "-" + highScore[i].score
+    scoreList.appendChild(addScore);
+
+ 
 
 clearHighButton.addEventListener('click', function(){
     localStorage.clear();
+    console.log('cleared!')
 }
-)
+)}}
  
 
-highScore = JSON.parse(localStorage.getItem("highScore") || "[]"),
-scoreList = document.getElementById('score-list')
 
-for (var i = 0; i < highScore.length; i++)  {
-    var addScore = document.createElement('li')
-    addScore.textContent = highscore[i].name + "-" + highscore[i].score
-    scoreList.appendChild(addScore);
-}
+
 
 
 //This takes you from the main "page" to the highscores container
 highScoresButton.addEventListener('click', highScores);
 
 function highScores(){
-    console.log('highscores!');
+    
     startContainerElement.classList.add('hide');
     highScoresContainerElement.classList.remove('hide');
 }
@@ -98,7 +103,7 @@ function startGame()  {
     startContainerElement.classList.add('hide');
     timerEl.classList.remove('hide');
     questionShuffled = questions.sort(() => Math.floor(Math.random()));
-    questionIndex = 1
+    questionIndex = 0
     console.log(questionShuffled)
     questionContainerElement.classList.remove('hide');
     setNextQuestion();
@@ -107,9 +112,14 @@ function startGame()  {
 
 
 //This sets the next question shuffled.
-function setNextQuestion()  {
-    clearState()
+function setNextQuestion()  { 
+    clearState();
+    if (questionShuffled.length < questionIndex +1 ){
+        displayScore();
+    }
+    else {
     visibleQuestion(questionShuffled[questionIndex])
+    }
 }
 //This shows the answers on the buttons and says which is wrong or right
 function visibleQuestion(question)  {
@@ -118,9 +128,9 @@ function visibleQuestion(question)  {
     const button = document.createElement('button')
     button.innerText = answer.text
     button.classList.add('btn')
+    console.log(question.question)
     if (answer.correct){
         button.dataset.correct = answer.correct
-       
     }
     else { 
         button.dataset.wrong = answer.wrong
@@ -138,6 +148,12 @@ function clearState() {
     }
 }
 
+
+
+
+
+
+
 //This gets if the answer selected is correct or not, and then either
 // goes to the next question if correct, or takes off 10 seconds and advances if wrong
 function  selectAnswer(e)  {
@@ -147,20 +163,22 @@ function  selectAnswer(e)  {
     setClassStatus(document.body, correct)
     Array.from(answerBtns.children).forEach(button => {
         setClassStatus(button, button.dataset.correct)
-     if (correct) {
-         questionIndex++
-         setNextQuestion();
+    })
+        if (correct) {
+        
+    questionIndex++
+        setNextQuestion();
      }
      else if (wrong) {
-         questionIndex++
+      questionIndex++
          secondsLeft = secondsLeft - 10;
          setNextQuestion();
-     }
-     if (questions.length > questionIndex + 1){
-            endGame();
-     }
-    })
-}
+        
+     }}
+   
+
+   
+    
         
     
 
@@ -182,7 +200,7 @@ function clearClassStatus(element) {
 
 
 //These are the list of questions, I will add some more later if time permits.
-var questions = [
+const questions = [
     {
         question: 'String values must be enclosed within ____ when being assigned to variables',
         answers: [
