@@ -1,49 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="style.css" rel="stylesheet">
-    <script defer src = "script.js"></script>
+    <script defer src="script.js"></script>
     <title>Code Quiz</title>
 </head>
 
 <body>
     <div class="container">
-       <div id = "start-game-container">
-        <h1>Code Quiz!</h1>
-        <div id="home" class = "button-grid-home">
-            <button class="btn" id = "start-button">Start Game</button>
-            <button class="btn" id = "high-scores-button">High Scores</button>
+        <div id="start-game-container">
+            <h1>Code Quiz!</h1>
+            <h2>Try and answer the questions, if you get them right, the background will turn green
+                , but if you get them wrong, it will turn red and 10 seconds will be deducted. Try and
+                beat the highscore!
+            </h2>
+            <div id="home" class="button-grid-home">
+                <button class="btn" id="start-button">Start Game</button>
+                <button class="btn" id="high-scores-button">High Scores</button>
+            </div>
         </div>
+        <div id="questions-container" class="hide">
+            <span id="timer" class="hide">Time: 0</span>
+            <div id="question">Question</div>
+            <div id="answer-buttons" class="button-grid-play">
+                <button class="btn">Answer 1</button>
+                <button class="btn">Answer 2</button>
+                <button class="btn">Answer 3</button>
+                <button class="btn">Answer 4</button>
+            </div>
         </div>
-      <div id="questions-container" class = "hide">
-        <span id="timer" class = "hide">Time: 0</span>
-         <div id="question">Question</div>
-         <div id="answer-buttons" class="button-grid-play">
-             <button class="btn">Answer 1</button>
-             <button class="btn">Answer 2</button>
-             <button class="btn">Answer 3</button>
-             <button class="btn">Answer 4</button>
-      </div>
-      </div>
-        <div id = "game-over-container" class = "hide">
+        <div id="game-over-container" class="hide">
             <h1>Game Complete!</h1>
             <p id="user-score"> </p>
-            <form class = "high-score-fillout">
-                <label for ="your-score">Enter Your Name Please: </label>
-                <input type = "text" id="user-name" placeholder = "Enter your name here">
-                <button class = "button" id="submit">Submit</button>
+            <form class="high-score-fillout">
+                <label for="your-score">Enter Your Name Please: </label>
+                <input type="text" id="user-name" placeholder="Enter your name here">
+                <div id="game-over-btns" class="button-grid-over">
+                    <button class="btn" id="save-button">Save</button>
+                    <button class="btn" id="back-home-button">Back Home</button>
+                </div>
             </form>
+
+
         </div>
         <div id="highscores-container" class="hide">
-            <h1>High Scores!</h1> 
+            <h1>High Scores!</h1>
             <ol id="score-list"></ol>
-            <div id ="high-score-btns" class = "button-grid-high">
-            <button class="btn" id="clear-btn">Clear Scores</button>
-            <button class="btn" id="back-home-btn">Back Home</button>
+            <div id="high-score-btns" class="button-grid-high">
+                <button class="btn" id="clear-btn">Clear Scores</button>
+                <button class="btn" id="back-home-btn">Back Home</button>
+            </div>
         </div>
-        </div> 
-        </div>
+    </div>
 </body>
+
 </html>

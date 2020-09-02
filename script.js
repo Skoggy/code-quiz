@@ -8,11 +8,12 @@ const highScoresContainerElement = document.getElementById('highscores-container
 const gameOverContainerElement = document.getElementById('game-over-container');
 const questionEle = document.getElementById('question');
 const answerBtns = document.getElementById('answer-buttons');
-const submitBtn = document.getElementById('submit')
+const saveBtn = document.getElementById('save-button')
 const timerEl = document.getElementById('timer');
 const userScoreEl = document.getElementById('user-score')
-//highScore = JSON.parse(localStorage.getItem("highScore") || "[]"),
-scoreList = document.getElementById('score-list')
+var scoreListEle = document.getElementById('score-list')
+highScore = JSON.parse(localStorage.getItem("highScore") || "[]")
+
 var userNameInput; 
 
 var secondsLeft = 90;
@@ -41,53 +42,69 @@ function setTimer()  {
 function displayScore()  {
         questionContainerElement.classList.add('hide');
         gameOverContainerElement.classList.remove('hide');
-        userScoreEl.textContent = "Your score is " + secondsLeft
-+ ".";   
+        userScoreEl.textContent = "Your score is " + secondsLeft + ".";   
  }
- submitBtn.addEventListener('click', function(event) {
-     event.stopPropagation();
+ 
+ 
+//This saves the score to the highscores list.
+ saveBtn.addEventListener('click', function() {
+    //event.preventDefault();
+    console.log('save')
      scoreAdd();
- });
-
- function scoreAdd (userNameInput, secondsLeft)  {
+})
+ 
+ function scoreAdd ()  {
      userNameInput = document.getElementById('user-name').value 
+ 
  let newUser = {
      name: userNameInput,
      score: secondsLeft
  }
 //Highscore variable declaration
- var highScore = JSON.parse(localStorage.getItem('highScore') || "[]");
-
+ var highScore = JSON.parse(localStorage.getItem("highScore") || "[]");
  highScore.push(newUser);
- localStorage.setItem('highScore', JSON.stringify('highScore'));
- console.log(highScore.length);
-
- for (var i = 0; i < highScore.length; i++)  {
-    var addScore = document.createElement('li')
-    addScore.textContent = highScore[i].name + "-" + highScore[i].score
-    scoreList.appendChild(addScore);
-
- 
-
-clearHighButton.addEventListener('click', function(){
-    localStorage.clear();
-    console.log('cleared!')
+ console.log(highScore)
+ localStorage.setItem("highScore", JSON.stringify(highScore))
 }
-)}}
+
+ 
  
 
 
 
-
+ 
 
 //This takes you from the main "page" to the highscores container
 highScoresButton.addEventListener('click', highScores);
 
-function highScores(){
+
     
+ 
+ console.log(highScore.length);
+    for (var i = 0; i < highScore.length; i++)  {
+        var scoreListLi = document.createElement('li')
+        scoreListLi.textContent = highScore[i].name + "-" + highScore[i].score
+        scoreListEle.appendChild(scoreListLi);
+        console.log(highScore)
+}
+
+function highScores()   { 
     startContainerElement.classList.add('hide');
     highScoresContainerElement.classList.remove('hide');
 }
+
+function refreshPage(){
+    window.location.reload();
+} 
+//clearHighButton.addEventListener('click', function()
+   clearHighButton.addEventListener("click", function() {
+    localStorage.clear();
+    console.log('cleared')
+    refreshPage();
+   })
+    
+    
+    
 //This takes you back the the main page
 backHomeButton.addEventListener('click', backHome);
 
@@ -150,10 +167,6 @@ function clearState() {
 
 
 
-
-
-
-
 //This gets if the answer selected is correct or not, and then either
 // goes to the next question if correct, or takes off 10 seconds and advances if wrong
 function  selectAnswer(e)  {
@@ -175,14 +188,10 @@ function  selectAnswer(e)  {
          setNextQuestion();
         
      }}
-   
 
-   
-    
-        
     
 
-    //This sets the class of the 
+    //This sets the class of the answer and changes the background to either red or green depending on if answer is correct or wrong.
 function setClassStatus(element, correct) {
     clearClassStatus(element) 
     if (correct){

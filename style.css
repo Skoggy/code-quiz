@@ -1,6 +1,6 @@
 *, *::before, *::after {
     box-sizing:border-box;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
 
 
@@ -52,14 +52,20 @@ body.wrong  {
 h1 {
     display: flex;
     justify-content: center;
-    margin-bottom: 90px;
+    margin-bottom: 70px;
     font-size: 50px;
+}
+h2 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    font-size: 20px;
 }
 
 .button-grid-home  {
     display: flex;
     justify-content: center; 
-    gap: 20px;
+    gap: 50px;
 }
 .button-grid-play {
     display: grid;
@@ -69,11 +75,18 @@ h1 {
     margin-top:20px;
     margin-bottom:20px;
 }
-.button-grid-high  {
+.button-grid-high   {
     display: flex;
     justify-content: center; 
-    gap: 20px;
+    gap: 50px;
 }
+.button-grid-over {
+    display: flex;
+    justify-content: center; 
+    gap: 50px;
+    margin-top: 30px;
+}
+
 
 .btn  {
     font-size: 1.8rem;
@@ -108,4 +121,30 @@ h1 {
 }
 #high-score-fillout  {
     font-size: 25px;
+}
+
+
+
+@media (max-width: 900px) {
+    .button-grid-play {
+        display:flex;
+    }
+}
+
+@media (max-width: 700px) {
+    .button-grid-play {
+        display: grid;
+    grid-template-columns: repeat(1, auto);
+}
+}
+@media (max-width: 450px) {
+    .button-grid-play {
+        display: grid;
+    
+}
+.btn  {
+    font-size: 1.8rem;
+    padding: 1rem 0;
+    width: 15rem;
+}
 }
